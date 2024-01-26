@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReportsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +18,4 @@ Route::get("/", function () {
     return view("dashboard");
 });
 
-Route::get("/report/{nickname}", function (string $nickname) {
-    return view("report", [
-        'nickname' => $nickname,
-    ]);
-});
+Route::get("/report/{nickname}", [ReportsController::class, 'show']);
