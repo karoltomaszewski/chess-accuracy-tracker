@@ -10,7 +10,7 @@
     <title>Chess Accuracy Tracker</title>
 </head>
 <body>
-    <div class="app">
+    <div id="app">
         <h1>{{ $nickname }}</h1>
 
         <div class="games">
@@ -52,7 +52,7 @@
                     </div>
 
                     <div class="link">
-                        <a href="{{ $game->getUrl() }}">View game</a>
+                        <a href="{{ $game->getUrl() }}" target="_blank">View game</a>
                     </div>
                 </div>
             @endforeach
