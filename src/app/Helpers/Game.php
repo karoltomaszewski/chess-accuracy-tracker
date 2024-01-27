@@ -4,6 +4,8 @@
 namespace App\Helpers;
 
 
+use Carbon\Carbon;
+
 class Game
 {
     private string $timeControl;
@@ -37,6 +39,30 @@ class Game
         $this->setTimeControlFromGameData();
         $this->setWhiteFromGameData();
         $this->setBlackFromGameData();
+        $this->setDateFromGameData();
+    }
+
+    private function getValueFromPGN(string $param): ?string
+    {
+        $startPos = strpos($this->gameData['pgn'], "[$param");
+
+        if ($startPos === false) {
+            return null;
+        }
+
+        $startPos += strlen("[$param ") + 1;
+        $endPos = strpos($this->gameData['pgn'], "]", $startPos) - 1;
+
+        if ($endPos === false) {
+            return null;
+        }
+
+        return substr($this->gameData['pgn'], $startPos, $endPos - $startPos);
+    }
+
+    private function setDateFromGameData()
+    {
+        $this->date = Carbon::createFromFormat('Y.m.d', $this->getValueFromPGN('UTCDate'))->format('d.m.Y');
     }
 
     private function setUrlFromGameData()
@@ -61,12 +87,14 @@ class Game
     {
         $this->white['username'] = $this->gameData['white']['username'];
         $this->white['rating'] = $this->gameData['white']['rating'];
+        $this->white['score'] = explode('-', $this->getValueFromPGN('Result'))[0];
     }
 
     private function setBlackFromGameData()
     {
         $this->black['username'] = $this->gameData['black']['username'];
         $this->black['rating'] = $this->gameData['black']['rating'];
+        $this->black['score'] = explode('-', $this->getValueFromPGN('Result'))[1];
     }
 
     /**

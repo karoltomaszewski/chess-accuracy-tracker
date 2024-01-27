@@ -13,50 +13,50 @@
     <div id="app">
         <h1>{{ $nickname }}</h1>
 
-        <div class="games">
+        <table class="games">
             @foreach($games as $game)
-                <div class="game">
-                    <div class="time-control">
+                <tr class="game">
+                    <td class="time-control">
                         {{ $game->getTimeControl() }}
-                    </div>
+                    </td>
 
-                    <div class="nicknames">
+                    <td class="nicknames">
                         <div class="nickname-white">
                             {{ $game->getWhite()['username'] }} ({{ $game->getWhite()['rating'] }})
                         </div>
                         <div class="nickname-black">
                             {{ $game->getBlack()['username'] }} ({{ $game->getBlack()['rating'] }})
                         </div>
-                    </div>
+                    </td>
 
-                    <div class="score">
+                    <td class="score">
                         <div class="score-white">
                             {{ $game->getWhite()['score'] }}
                         </div>
                         <div class="score-black">
                             {{ $game->getBlack()['score'] }}
                         </div>
-                    </div>
+                    </td>
 
-                    <div class="accuracy">
+                    <td class="accuracy">
                         <div class="accuracy-white"></div>
                         <div class="accuracy-black"></div>
-                    </div>
+                    </td>
 
-                    <div class="moves">
+                    <td class="moves">
 
-                    </div>
+                    </td>
 
-                    <div class="date">
+                    <td class="date">
+                        {{ $game->getDate() }}
+                    </td>
 
-                    </div>
-
-                    <div class="link">
+                    <td class="link">
                         <a href="{{ $game->getUrl() }}" target="_blank">View game</a>
-                    </div>
-                </div>
+                    </td>
+                </tr>
             @endforeach
-        </div>
+        </table>
     </div>
 </body>
 </html>
