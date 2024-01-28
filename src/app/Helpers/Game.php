@@ -40,6 +40,7 @@ class Game
         $this->setWhiteFromGameData();
         $this->setBlackFromGameData();
         $this->setDateFromGameData();
+        $this->setMovesFromGameData();
     }
 
     private function getValueFromPGN(string $param): ?string
@@ -68,6 +69,18 @@ class Game
     private function setUrlFromGameData()
     {
         $this->url = $this->gameData['url'];
+    }
+
+    private function setMovesFromGameData()
+    {
+        preg_match_all('/ .{0,2}?\d\./', $this->gameData['pgn'], $outputArray);
+
+        // eg. " 1." or " 44." (without quotes)
+        $lastEl = end($outputArray[0]);
+        $moves = substr($lastEl, 1);
+        $moves = (int) $moves;
+
+        $this->moves = $moves;
     }
 
     private function setTimeControlFromGameData()

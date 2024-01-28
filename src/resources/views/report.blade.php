@@ -44,7 +44,7 @@
                     </td>
 
                     <td class="moves">
-
+                        {{ $game->getMoves() }}
                     </td>
 
                     <td class="date">
